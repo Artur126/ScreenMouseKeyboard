@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/io.dir/src/Screen.cpp.o CMakeFiles/io.dir/src/main.cpp.o -o io  /usr/lib/x86_64-linux-gnu/libSDL2.so 
