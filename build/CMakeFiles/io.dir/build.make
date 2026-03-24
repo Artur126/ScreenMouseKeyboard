@@ -109,6 +109,7 @@ io: CMakeFiles/io.dir/src/Screen.cpp.o
 io: CMakeFiles/io.dir/src/main.cpp.o
 io: CMakeFiles/io.dir/build.make
 io: /usr/lib/x86_64-linux-gnu/libSDL2.so
+io: /usr/lib/x86_64-linux-gnu/libSDL2_ttf.so
 io: CMakeFiles/io.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/artur/vsProjects/ScreenMouseKeyboard/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable io"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/io.dir/link.txt --verbose=$(VERBOSE)
