@@ -32,8 +32,8 @@ build.ninja
 
 # --- IDE / Editor ---
 # VS Code
-.vscode/
-*.code-workspace
+#.vscode/
+#*.code-workspace
 
 # CLion / JetBrains
 .idea/

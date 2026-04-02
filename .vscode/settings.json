@@ -1,0 +1,5 @@
+{
+    "cmake.generator": "MinGW Makefiles",
+    "cmake.configureOnOpen": true,
+    "cmake.useCMakePresets": "always"
+}
