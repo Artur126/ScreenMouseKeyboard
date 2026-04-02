@@ -1,1 +1,3 @@
-/usr/bin/c++ -g CMakeFiles/io.dir/src/Screen.cpp.o CMakeFiles/io.dir/src/main.cpp.o -o io  /usr/lib/x86_64-linux-gnu/libSDL2.so /usr/lib/x86_64-linux-gnu/libSDL2_ttf.so -lSDL2_gfx -lSDL2 
+C:\msys64\mingw64\bin\cmake.exe -E rm -f CMakeFiles\io.dir/objects.a
+C:\msys64\mingw64\bin\ar.exe qc CMakeFiles\io.dir/objects.a @CMakeFiles\io.dir\objects1.rsp
+C:\msys64\mingw64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\io.dir/objects.a -Wl,--no-whole-archive -o io.exe -Wl,--out-implib,libio.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\io.dir\linkLibs.rsp

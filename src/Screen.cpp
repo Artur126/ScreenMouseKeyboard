@@ -2,16 +2,34 @@
 #include <iostream>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
+#include <sstream>
+
 
 
 Screen::Screen(const std::string& title, int width, int height)
-    : window(nullptr), renderer(nullptr), open(true)
+    : window(nullptr), renderer(nullptr), open(true), mouseX(0), mouseY(0), lastKey(-1), 
+      width(width), height(height), font(nullptr), mouseLeft(false), mouseRight(false), mouseMiddle(false)
 {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         std::cerr << "SDL init error: " << SDL_GetError() << "\n";
         open = false;
         return;
     }
+
+      if (TTF_Init() != 0) {
+        std::cerr << "TTF init error: " << TTF_GetError() << "\n";
+        open = false;
+        return;
+    }
+
+    font = TTF_OpenFont(FONT_PATH, 20);
+    if (!font) {
+        std::cerr << "Font load error: " << TTF_GetError() << "\n";
+        open = false;
+        return;
+    }
+    //std::cout << "TTF initialized OK\n" << std::endl;
+
 
     window = SDL_CreateWindow(
         title.c_str(),
@@ -32,11 +50,14 @@ Screen::Screen(const std::string& title, int width, int height)
         std::cerr << "Renderer error: " << SDL_GetError() << "\n";
         open = false;
     }
+
 }
 
 Screen::~Screen() {
+    if (font) TTF_CloseFont(font);
     if (renderer) SDL_DestroyRenderer(renderer);
     if (window) SDL_DestroyWindow(window);
+    TTF_Quit();
     SDL_Quit();
 }
 
@@ -50,7 +71,30 @@ void Screen::pollEvents() {
         if (event.type == SDL_QUIT) {
             open = false;
         }
-    }
+
+        if (event.type == SDL_KEYDOWN) {
+            lastKey = event.key.keysym.sym;
+        }
+
+        if (event.type == SDL_MOUSEMOTION) {
+            mouseX = event.motion.x;
+            mouseY = event.motion.y;
+        }
+
+        if (event.type == SDL_MOUSEBUTTONDOWN) {
+            if (event.button.button == SDL_BUTTON_LEFT)   mouseLeft = true;
+            if (event.button.button == SDL_BUTTON_RIGHT)  mouseRight = true;
+            if (event.button.button == SDL_BUTTON_MIDDLE) mouseMiddle = true;
+        }
+
+        if (event.type == SDL_MOUSEBUTTONUP) {
+            if (event.button.button == SDL_BUTTON_LEFT)   mouseLeft = false;
+            if (event.button.button == SDL_BUTTON_RIGHT)  mouseRight = false;
+            if (event.button.button == SDL_BUTTON_MIDDLE) mouseMiddle = false;
+        }
+}
+
+
 }
 
 void Screen::clear() {
@@ -237,25 +281,52 @@ void Screen::DrawEllipse(
 void Screen::DrawText(
     const std::string& text,
     int x, int y,
-    SDL_Color color,
-    const std::string& fontPath,
-    int fontSize
+    SDL_Color color
 ) {
-    if (!renderer) return;
-
-    TTF_Font* font = TTF_OpenFont(fontPath.c_str(), fontSize);
-    if (!font) return;
+    if (!renderer || !font) return;
 
     SDL_Surface* surface = TTF_RenderText_Blended(font, text.c_str(), color);
+    if (!surface) return;
+
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    if (!texture) {
+        SDL_FreeSurface(surface);
+        return;
+    }
 
     SDL_Rect rect = { x, y, surface->w, surface->h };
     SDL_RenderCopy(renderer, texture, nullptr, &rect);
 
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
-    TTF_CloseFont(font);
 }
+
+
+
+void Screen::DrawKeyMouseInfo() {
+    SDL_Color black = {0, 0, 0, 255};
+
+    char keyChar = static_cast<char>(lastKey);
+    std::stringstream ss;
+    ss << "Key dec = " << lastKey << " hex = 0x" << std::hex << lastKey << " char = '" << (isprint(keyChar) ? keyChar : '?') << "'";
+
+    DrawText(ss.str(), 10, 10, black);
+
+    std::stringstream ms;
+    ms  <<  "Mouse: " + std::to_string(mouseX) + " : " + std::to_string(mouseY)
+        << " Mouse Btn: L=" << (mouseLeft ? "1" : "0")
+        << " M=" << (mouseMiddle ? "1" : "0")
+        << " R=" << (mouseRight ? "1" : "0");
+
+
+    std::string mouseStr = ms.str();
+
+    int w, h;
+    TTF_SizeText(font, mouseStr.c_str(), &w, &h);
+
+    DrawText(mouseStr, width - w - 10, height - h - 10, black);
+}
+
 
 
 

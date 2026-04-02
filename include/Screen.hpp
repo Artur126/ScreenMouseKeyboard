@@ -1,10 +1,13 @@
 #pragma once
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <string>
 #include <string>
 #include <vector>
 #include <algorithm>
 #include <cmath>
+
+
 
 
 /**
@@ -193,14 +196,42 @@ void DrawEllipse(
 void DrawText(
     const std::string& text,
     int x, int y,
-    SDL_Color color = {255, 255, 255, 255},
-    const std::string& fontPath = "arial.ttf",
-    int fontSize = 24
+    SDL_Color color = {255, 255, 255, 255}
 );
+
+/**
+ * @brief Rysuje informacje  na ekranie. 
+ * wyświetla aktualną pozycję myszy, ostatnio naciśnięty klawisz
+ * 
+ */
+void DrawKeyMouseInfo();
+
+TTF_Font* GetFont() const { return font; }
+
 
 
 private:
     SDL_Window* window;      ///< Wskaźnik na okno SDL2.
     SDL_Renderer* renderer;  ///< Wskaźnik na renderer SDL2.
     bool open;               ///< Flaga informująca, czy okno jest otwarte.
+
+    int mouseX;             ///< Aktualna pozycja myszy - X.
+    int mouseY;             ///< Aktualna pozycja myszy - Y.
+    int lastKey;            ///< Ostatnio naciśnięty klawisz (SDL_Keycode).
+
+    int width;              ///< Szerokość okna.
+    int height;             ///< Wysokość okna.
+
+
+    bool mouseLeft;         //< Aktualny stan przycisku myszy - lewy.
+    bool mouseRight;        ///< Aktualny stan przycisku myszy - prawy.
+    bool mouseMiddle;       ///< Aktualny stan przycisku myszy - środkowy.
+
+
+    TTF_Font* font;         ///< Wskaźnik na czcionkę TTF.
+#ifdef _WIN32
+    static constexpr const char* FONT_PATH = "C:/Windows/Fonts/arial.ttf";
+#else
+    static constexpr const char* FONT_PATH = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf";
+#endif
 };

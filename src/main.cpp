@@ -53,16 +53,15 @@ int main(int argc, char *argv[], char *envp[]) {
             3                      // grubość obwódki
         );
 
-        // --- TEKST ---
-        // Biały tekst w lewym górnym rogu
+        //--- TEKST --- Biały tekst w lewym górnym rogu
         screen.DrawText(
             "Hello SDL2!",
             20, 20,
-            {255, 255, 255, 255},  // kolor tekstu
-            "arial.ttf",           // czcionka
-            28                     // rozmiar
+            {255, 255, 255, 255} // kolor tekstu
         );
-        
+
+        screen.DrawKeyMouseInfo();
+        //screen.DrawText("TEST", 100, 100, {0,0,0,255});
         screen.display();
     }   
     return 0;  

@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/artur/vsProjects/ScreenMouseKeyboard/src/Screen.cpp" "CMakeFiles/io.dir/src/Screen.cpp.o" "gcc" "CMakeFiles/io.dir/src/Screen.cpp.o.d"
-  "/home/artur/vsProjects/ScreenMouseKeyboard/src/main.cpp" "CMakeFiles/io.dir/src/main.cpp.o" "gcc" "CMakeFiles/io.dir/src/main.cpp.o.d"
+  "C:/Users/artur/Projekty/ScreenMouseKeyboard/src/Screen.cpp" "CMakeFiles/io.dir/src/Screen.cpp.obj" "gcc" "CMakeFiles/io.dir/src/Screen.cpp.obj.d"
+  "C:/Users/artur/Projekty/ScreenMouseKeyboard/src/main.cpp" "CMakeFiles/io.dir/src/main.cpp.obj" "gcc" "CMakeFiles/io.dir/src/main.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.
